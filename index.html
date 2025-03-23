@@ -111,52 +111,64 @@
     }
 
     async function submitForm() {
-  const realName = document.getElementById("realName").value.trim();
-  const fbName = document.getElementById("fbName").value.trim();
-  const bankLast5 = document.getElementById("bankLast5").value.trim();
-  const username = document.getElementById("username").value.trim();
-  const password = document.getElementById("password").value.trim();
-  const selectedSchools = Array.from(document.querySelectorAll("#schools input[type=checkbox]:checked")).map(cb => cb.value);
-  const totalPrice = parseInt(document.getElementById("total").innerText);
+      const realName = document.getElementById("realName").value.trim();
+      const fbName = document.getElementById("fbName").value.trim();
+      const bankLast5 = document.getElementById("bankLast5").value.trim();
+      const username = document.getElementById("username").value.trim();
+      const password = document.getElementById("password").value.trim();
+      const selectedSchools = Array.from(document.querySelectorAll("#schools input[type=checkbox]:checked")).map(cb => cb.value);
+      const totalPrice = parseInt(document.getElementById("total").innerText);
 
-  if (!realName || !fbName || !bankLast5 || !username || !password || selectedSchools.length === 0) {
-    alert("❌ 請填寫所有欄位並至少勾選一所學校！");
-    return;
-  }
+      if (!realName || !fbName || !bankLast5 || !username || !password || selectedSchools.length === 0) {
+        alert("❌ 請填寫所有欄位並至少勾選一所學校！");
+        return;
+      }
 
-  const payload = {
-    realName,
-    fbName,
-    bankLast5,
-    username,
-    password,
-    selectedSchools,
-    totalPrice
-  };
+      try {
+        // 檢查帳號是否重複
+        const checkRes = await fetch("https://us-central1-chesolutionsignup.cloudfunctions.net/checkUsernameExists", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ username })
+        });
 
-  try {
-    const res = await fetch("https://us-central1-chesolutionsignup.cloudfunctions.net/submitSignupRequest", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload)
-    });
+        const checkData = await checkRes.json();
+        if (checkData.exists) {
+          alert(`⚠️ 帳號 ${username} 已存在於 ${checkData.where}，請改用其他帳號！`);
+          return;
+        }
 
-    const data = await res.json();
-    if (data.success) {
-      document.getElementById("result").innerHTML = `
-        ✅ 送出成功，請耐心等待審核！<br>
-        若有問題請私訊 <a href="https://www.facebook.com/CHEisverygood" target="_blank">粉專</a>。
-      `;
-      clearForm();
-    } else {
-      document.getElementById("result").innerText = "❌ 發生錯誤：" + (data.error || "請稍後再試");
+        const payload = {
+          realName,
+          fbName,
+          bankLast5,
+          username,
+          password,
+          selectedSchools,
+          totalPrice
+        };
+
+        const res = await fetch("https://us-central1-chesolutionsignup.cloudfunctions.net/submitSignupRequest", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload)
+        });
+
+        const data = await res.json();
+        if (data.success) {
+          document.getElementById("result").innerHTML = `
+            ✅ 送出成功，請耐心等待審核！<br>
+            若有問題請私訊 <a href="https://www.facebook.com/CHEisverygood" target="_blank">粉專</a>。
+          `;
+          clearForm();
+        } else {
+          document.getElementById("result").innerText = "❌ 發生錯誤：" + (data.error || "請稍後再試");
+        }
+      } catch (err) {
+        console.error(err);
+        document.getElementById("result").innerText = "🚨 無法連線，請稍後再試。";
+      }
     }
-  } catch (err) {
-    console.error(err);
-    document.getElementById("result").innerText = "🚨 無法連線，請稍後再試。";
-  }
-}
-
   </script>
 </body>
 </html>
