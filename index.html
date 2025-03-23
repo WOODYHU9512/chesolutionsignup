@@ -157,13 +157,13 @@
         const data = await res.json();
         if (data.success) {
   document.getElementById("result").innerHTML = `
-    ✅ 送出成功，請耐心等待審核！<br>
+    ✅ 送出成功，請耐心等待審核！(稍後跳轉)<br>
     若有問題請私訊 <a href="https://www.facebook.com/CHEisverygood" target="_blank">粉專</a>。
   `;
   // 加上延遲清空表單，2 秒後再清除欄位
   setTimeout(() => {
     clearForm();
-  }, 2000);
+  }, 10000);
 }
  else {
           document.getElementById("result").innerText = "❌ 發生錯誤：" + (data.error || "請稍後再試");
