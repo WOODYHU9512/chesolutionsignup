@@ -134,7 +134,7 @@
 
         const checkData = await checkRes.json();
         if (checkData.exists) {
-          alert(`⚠️ 帳號 ${username} 已存在於 ${checkData.where}，請改用其他帳號！`);
+          alert(`⚠️ 帳號 ${username} 已被註冊，請改用其他帳號！`);
           return;
         }
 
@@ -156,12 +156,16 @@
 
         const data = await res.json();
         if (data.success) {
-          document.getElementById("result").innerHTML = `
-            ✅ 送出成功，請耐心等待審核！<br>
-            若有問題請私訊 <a href="https://www.facebook.com/CHEisverygood" target="_blank">粉專</a>。
-          `;
-          clearForm();
-        } else {
+  document.getElementById("result").innerHTML = `
+    ✅ 送出成功，請耐心等待審核！<br>
+    若有問題請私訊 <a href="https://www.facebook.com/CHEisverygood" target="_blank">粉專</a>。
+  `;
+  // 加上延遲清空表單，2 秒後再清除欄位
+  setTimeout(() => {
+    clearForm();
+  }, 2000);
+}
+ else {
           document.getElementById("result").innerText = "❌ 發生錯誤：" + (data.error || "請稍後再試");
         }
       } catch (err) {
