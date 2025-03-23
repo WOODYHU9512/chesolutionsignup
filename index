@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>帳號註冊申請</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      max-width: 600px;
+      margin: auto;
+    }
+    label {
+      display: block;
+      margin-top: 15px;
+      font-weight: bold;
+    }
+    input[type="text"], input[type="password"] {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+    }
+    .school {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 5px 0;
+    }
+    .total {
+      font-weight: bold;
+      margin-top: 10px;
+    }
+    button {
+      margin-top: 20px;
+      padding: 10px 20px;
+      font-size: 16px;
+    }
+  </style>
+</head>
+<body>
+  <h2>帳號註冊申請表單</h2>
+
+  <form id="registerForm">
+    <label>真實姓名：
+      <input type="text" id="realName" required />
+    </label>
+
+    <label>FB 姓名（聯絡用）：
+      <input type="text" id="fbName" required />
+    </label>
+
+    <label>銀行帳號後五碼：
+      <input type="text" id="bankCode" maxlength="5" required />
+    </label>
+
+    <label>欲購買學校（每間 100 元）：</label>
+    <div class="school"><input type="checkbox" value="台大" /> 台大</div>
+    <div class="school"><input type="checkbox" value="清大" /> 清大</div>
+    <div class="school"><input type="checkbox" value="成大" /> 成大</div>
+    <div class="school"><input type="checkbox" value="中央" /> 中央</div>
+    <div class="school"><input type="checkbox" value="台科大" /> 台科大</div>
+    <div class="school"><input type="checkbox" value="中興" /> 中興</div>
+
+    <div class="total">總金額：<span id="total">0</span> 元</div>
+
+    <label>申請帳號：
+      <input type="text" id="username" required />
+    </label>
+
+    <label>申請密碼：
+      <input type="password" id="password" required />
+    </label>
+
+    <button type="submit">送出申請</button>
+  </form>
+
+  <script>
+    const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+    const totalDisplay = document.getElementById("total");
+
+    checkboxes.forEach(cb => {
+      cb.addEventListener("change", () => {
+        const total = Array.from(checkboxes).filter(cb => cb.checked).length * 100;
+        totalDisplay.innerText = total;
+      });
+    });
+
+    document.getElementById("registerForm").addEventListener("submit", (e) => {
+      e.preventDefault();
+
+      const selectedSchools = Array.from(checkboxes)
+        .filter(cb => cb.checked)
+        .map(cb => cb.value);
+
+      const formData = {
+        realName: document.getElementById("realName").value.trim(),
+        fbName: document.getElementById("fbName").value.trim(),
+        bankCode: document.getElementById("bankCode").value.trim(),
+        username: document.getElementById("username").value.trim(),
+        password: document.getElementById("password").value.trim(),
+        purchased: selectedSchools,
+        total: selectedSchools.length * 100
+      };
+
+      // 暫時模擬送出：實際上可以改成 fetch 呼叫 Cloud Function
+      console.log("📩 表單送出：", formData);
+      alert("✅ 資料已送出，我們將盡快審核！");
+
+      document.getElementById("registerForm").reset();
+      totalDisplay.innerText = "0";
+    });
+  </script>
+</body>
+</html>
