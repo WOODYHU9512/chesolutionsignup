@@ -3,149 +3,132 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>註冊填寫表單</title>
+  <title>帳號申請表單</title>
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      max-width: 600px;
-      margin: 40px auto;
-      padding: 20px;
-      border: 1px solid #ccc;
-      border-radius: 10px;
-    }
-    label {
-      display: block;
-      margin-top: 15px;
-      font-weight: bold;
-    }
-    input[type="text"], input[type="password"] {
-      width: 100%;
-      padding: 8px;
-      margin-top: 5px;
-      font-size: 16px;
-    }
-    .school-option {
-      margin-top: 5px;
-    }
-    #total {
-      margin-top: 20px;
-      font-size: 18px;
-      font-weight: bold;
-      color: green;
-    }
-    button {
-      margin-top: 20px;
-      padding: 10px 20px;
-      font-size: 16px;
-      cursor: pointer;
-    }
+    body { font-family: sans-serif; padding: 20px; }
+    label { display: block; margin-top: 12px; }
+    input[type="text"], input[type="password"] { width: 300px; padding: 5px; }
+    .error { color: red; font-size: 14px; display: none; }
+    .school-group { margin-top: 12px; }
+    .school-group label { display: block; }
+    #total { margin-top: 16px; font-weight: bold; }
+    button { margin-top: 20px; padding: 8px 16px; font-size: 16px; }
   </style>
 </head>
 <body>
-  <h2>帳號申請表單</h2>
+  <h2>申請帳號表單</h2>
 
-  <label>真實姓名：</label>
-  <input type="text" id="realName" required>
+  <label>真實姓名：<br>
+    <input type="text" id="realName">
+    <span class="error" id="error-realName">請填寫真實姓名</span>
+  </label>
 
-  <label>Facebook姓名與網址 (聯絡用，請會匯款完主動私訊粉專)：</label>
-  <input type="text" id="fbName" required>
+  <label>Facebook姓名與網址（聯絡用，請會匯款完主動私訊粉專）：<br>
+    <input type="text" id="fbName">
+    <span class="error" id="error-fbName">請填寫 Facebook 姓名與網址</span>
+  </label>
 
-  <label>銀行帳號後五碼：</label>
-  <input type="text" id="bankCode" required>
+  <label>銀行帳號後五碼：<br>
+    <input type="text" id="bankLast5">
+    <span class="error" id="error-bankLast5">請填寫銀行帳號後五碼</span>
+  </label>
 
-  <label>欲購買的間數：</label>
-  <div class="school-option">
-    <input type="checkbox" name="school" value="台大" data-price="600"> 台大（103~114 單操輸送/化熱化反/工程數學）
-  </div>
-  <div class="school-option">
-    <input type="checkbox" name="school" value="清大" data-price="700"> 清大（103~114 單操輸送/化熱化反）
-  </div>
-  <div class="school-option">
-    <input type="checkbox" name="school" value="成大" data-price="700"> 成大（含103~114 單操輸送/化熱/化反）
-  </div>
-  <div class="school-option">
-    <input type="checkbox" name="school" value="中央" data-price="550"> 中央（含103~114 單操輸送/化熱化反）
-  </div>
-  <div class="school-option">
-    <input type="checkbox" name="school" value="台科大" data-price="550"> 台科大（含103~114 單操輸送/化熱化反/工程數學）
-  </div>
-  <div class="school-option">
-    <input type="checkbox" name="school" value="中興" data-price="550"> 中興（含104~114 單操輸送/化熱化反/工程數學）
+  <div class="school-group">
+    <strong>欲購買的間數：</strong><br>
+    <label><input type="checkbox" class="school" data-name="台大" data-price="600"> 台大（103~114單操輸送/化熱化反/工程數學） - 600元</label>
+    <label><input type="checkbox" class="school" data-name="清大" data-price="700"> 清大（103~114單操輸送/化熱化反） - 700元</label>
+    <label><input type="checkbox" class="school" data-name="成大" data-price="700"> 成大（103~114單操輸送/化熱/化反） - 700元</label>
+    <label><input type="checkbox" class="school" data-name="中央" data-price="550"> 中央（103~114單操輸送/化熱化反） - 550元</label>
+    <label><input type="checkbox" class="school" data-name="台科大" data-price="550"> 台科大（103~114單操輸送/化熱化反/工程數學） - 550元</label>
+    <label><input type="checkbox" class="school" data-name="中興" data-price="550"> 中興（104~114單操輸送/化熱化反/工程數學） - 550元</label>
+    <span class="error" id="error-school">請至少選擇一間學校</span>
   </div>
 
   <div id="total">總金額：0 元</div>
 
-  <label>申請帳號：</label>
-  <input type="text" id="newUsername" required>
+  <label>申請帳號：<br>
+    <input type="text" id="username">
+    <span class="error" id="error-username">請填寫帳號</span>
+  </label>
 
-  <label>申請密碼：</label>
-  <input type="password" id="newPassword" required>
+  <label>申請密碼：<br>
+    <input type="password" id="password">
+    <span class="error" id="error-password">請填寫密碼</span>
+  </label>
 
-  <button onclick="handleSubmit()">送出申請</button>
+  <button onclick="submitForm()">✅ 送出申請</button>
+  <button onclick="resetForm()">🧹 清除重填</button>
 
   <script>
-    const schoolCheckboxes = document.querySelectorAll('input[name="school"]');
-    const totalDisplay = document.getElementById("total");
+    const schools = document.querySelectorAll(".school");
+    const totalEl = document.getElementById("total");
 
-    schoolCheckboxes.forEach(cb => {
-      cb.addEventListener("change", updateTotal);
-    });
+    schools.forEach(chk => chk.addEventListener("change", updateTotal));
 
     function updateTotal() {
       let total = 0;
       let count = 0;
-
-      schoolCheckboxes.forEach(cb => {
-        if (cb.checked) {
-          total += parseInt(cb.dataset.price);
+      schools.forEach(chk => {
+        if (chk.checked) {
+          total += Number(chk.dataset.price);
           count++;
         }
       });
 
-      if (count === 2) total -= 100;
-      else if (count === 3) total -= 200;
-      else if (count === 4) total -= 350;
-      else if (count === 5) total -= 500;
-      else if (count === 6) total -= 800;
-
-      totalDisplay.textContent = `總金額：${total} 元`;
+      const discount = count === 2 ? 100 : count === 3 ? 200 : count === 4 ? 350 : count === 5 ? 500 : count === 6 ? 800 : 0;
+      total -= discount;
+      totalEl.textContent = `總金額：${total} 元`;
     }
 
-    function handleSubmit() {
-      const name = document.getElementById("realName").value.trim();
-      const fb = document.getElementById("fbName").value.trim();
-      const bank = document.getElementById("bankCode").value.trim();
-      const username = document.getElementById("newUsername").value.trim();
-      const password = document.getElementById("newPassword").value.trim();
+    function resetForm() {
+      document.querySelectorAll("input").forEach(input => {
+        if (input.type === "text" || input.type === "password") input.value = "";
+        if (input.type === "checkbox") input.checked = false;
+      });
+      totalEl.textContent = "總金額：0 元";
+      document.querySelectorAll(".error").forEach(e => e.style.display = "none");
+    }
 
-      const selected = [];
-      schoolCheckboxes.forEach(cb => {
-        if (cb.checked) selected.push(cb.value);
+    function submitForm() {
+      const fields = ["realName", "fbName", "bankLast5", "username", "password"];
+      let valid = true;
+      fields.forEach(id => {
+        const el = document.getElementById(id);
+        const err = document.getElementById("error-" + id);
+        if (!el.value.trim()) {
+          err.style.display = "inline";
+          valid = false;
+        } else {
+          err.style.display = "none";
+        }
       });
 
-      if (!name || !fb || !bank || !username || !password) {
-        alert("❌ 請填寫所有欄位！");
-        return;
+      const checkedSchools = Array.from(schools).filter(s => s.checked);
+      const schoolError = document.getElementById("error-school");
+      if (checkedSchools.length === 0) {
+        schoolError.style.display = "inline";
+        valid = false;
+      } else {
+        schoolError.style.display = "none";
       }
 
-      if (selected.length === 0) {
-        alert("❌ 請至少選擇一所學校！");
-        return;
-      }
+      if (!valid) return alert("❌ 請完整填寫所有欄位");
 
-      const purchased = {};
-      selected.forEach(s => purchased[s] = true);
+      const formData = {
+        realName: document.getElementById("realName").value.trim(),
+        fbName: document.getElementById("fbName").value.trim(),
+        bankLast5: document.getElementById("bankLast5").value.trim(),
+        username: document.getElementById("username").value.trim(),
+        password: document.getElementById("password").value.trim(),
+        purchased: {}
+      };
 
-      console.log({
-        username,
-        password,
-        realName: name,
-        fb,
-        bank,
-        purchased
+      checkedSchools.forEach(s => {
+        formData.purchased[s.dataset.name] = true;
       });
 
-      alert("✅ 資料已準備好，準備串接 Firebase");
+      console.log("✅ 將送出的資料：", formData);
+      alert("✅ 表單資料已準備好，可進行串接 Firebase（目前僅顯示於 console.log）");
     }
   </script>
 </body>
