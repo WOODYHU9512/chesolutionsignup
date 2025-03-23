@@ -1,134 +1,157 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>帳號申請表單</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>註冊頁面</title>
   <style>
-    body { font-family: sans-serif; padding: 20px; }
-    label { display: block; margin-top: 12px; }
-    input[type="text"], input[type="password"] { width: 300px; padding: 5px; }
-    .error { color: red; font-size: 14px; display: none; }
-    .school-group { margin-top: 12px; }
-    .school-group label { display: block; }
-    #total { margin-top: 16px; font-weight: bold; }
-    button { margin-top: 20px; padding: 8px 16px; font-size: 16px; }
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 600px;
+      margin: 30px auto;
+      padding: 20px;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+    }
+    h2 {
+      text-align: center;
+    }
+    label {
+      display: block;
+      margin-top: 15px;
+    }
+    input[type="text"], input[type="password"] {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      box-sizing: border-box;
+    }
+    .school-option {
+      display: flex;
+      justify-content: space-between;
+      padding: 5px 0;
+    }
+    .school-option label {
+      margin: 0;
+    }
+    button {
+      margin-top: 20px;
+      padding: 10px 15px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    #result {
+      margin-top: 20px;
+      font-weight: bold;
+      color: green;
+      text-align: center;
+    }
   </style>
 </head>
 <body>
-  <h2>申請帳號表單</h2>
+  <h2>註冊系統</h2>
+  <label>真實姓名：<input type="text" id="realName" required></label>
+  <label>Facebook姓名與網址（聯絡用，請會匯款完主動私訊粉專）：<input type="text" id="fbName" required></label>
+  <label>銀行帳號後五碼：<input type="text" id="bankLast5" required></label>
 
-  <label>真實姓名：<br>
-    <input type="text" id="realName">
-    <span class="error" id="error-realName">請填寫真實姓名</span>
-  </label>
+  <h3>欲購買的間數：</h3>
+  <div id="schools"></div>
 
-  <label>Facebook姓名與網址（聯絡用，請會匯款完主動私訊粉專）：<br>
-    <input type="text" id="fbName">
-    <span class="error" id="error-fbName">請填寫 Facebook 姓名與網址</span>
-  </label>
+  <p><strong>總金額：<span id="total">0</span> 元</strong></p>
 
-  <label>銀行帳號後五碼：<br>
-    <input type="text" id="bankLast5">
-    <span class="error" id="error-bankLast5">請填寫銀行帳號後五碼</span>
-  </label>
+  <label>申請帳號：<input type="text" id="username" required></label>
+  <label>申請密碼：<input type="password" id="password" required></label>
 
-  <div class="school-group">
-    <strong>欲購買的間數：</strong><br>
-    <label><input type="checkbox" class="school" data-name="台大" data-price="600"> 台大（103~114單操輸送/化熱化反/工程數學） - 600元</label>
-    <label><input type="checkbox" class="school" data-name="清大" data-price="700"> 清大（103~114單操輸送/化熱化反） - 700元</label>
-    <label><input type="checkbox" class="school" data-name="成大" data-price="700"> 成大（103~114單操輸送/化熱/化反） - 700元</label>
-    <label><input type="checkbox" class="school" data-name="中央" data-price="550"> 中央（103~114單操輸送/化熱化反） - 550元</label>
-    <label><input type="checkbox" class="school" data-name="台科大" data-price="550"> 台科大（103~114單操輸送/化熱化反/工程數學） - 550元</label>
-    <label><input type="checkbox" class="school" data-name="中興" data-price="550"> 中興（104~114單操輸送/化熱化反/工程數學） - 550元</label>
-    <span class="error" id="error-school">請至少選擇一間學校</span>
-  </div>
-
-  <div id="total">總金額：0 元</div>
-
-  <label>申請帳號：<br>
-    <input type="text" id="username">
-    <span class="error" id="error-username">請填寫帳號</span>
-  </label>
-
-  <label>申請密碼：<br>
-    <input type="password" id="password">
-    <span class="error" id="error-password">請填寫密碼</span>
-  </label>
-
-  <button onclick="submitForm()">✅ 送出申請</button>
-  <button onclick="resetForm()">🧹 清除重填</button>
+  <button onclick="submitForm()">送出申請</button>
+  <button onclick="clearForm()">清空所有欄位</button>
+  <div id="result"></div>
 
   <script>
-    const schools = document.querySelectorAll(".school");
-    const totalEl = document.getElementById("total");
+    const schoolPrices = {
+      "台大": 600,
+      "清大": 700,
+      "成大": 700,
+      "中央": 550,
+      "台科大": 550,
+      "中興": 550
+    };
 
-    schools.forEach(chk => chk.addEventListener("change", updateTotal));
+    const discount = [0, 0, 100, 200, 350, 500, 800];
+    const schoolDiv = document.getElementById("schools");
+    const totalDisplay = document.getElementById("total");
+
+    for (const [school, price] of Object.entries(schoolPrices)) {
+      const div = document.createElement("div");
+      div.className = "school-option";
+      div.innerHTML = `
+        <label><input type="checkbox" value="${school}" onchange="updateTotal()"> ${school}（${price} 元）</label>
+      `;
+      schoolDiv.appendChild(div);
+    }
 
     function updateTotal() {
-      let total = 0;
-      let count = 0;
-      schools.forEach(chk => {
-        if (chk.checked) {
-          total += Number(chk.dataset.price);
-          count++;
-        }
+      const checkboxes = document.querySelectorAll("#schools input[type=checkbox]:checked");
+      let sum = 0;
+      checkboxes.forEach(cb => {
+        sum += schoolPrices[cb.value];
       });
-
-      const discount = count === 2 ? 100 : count === 3 ? 200 : count === 4 ? 350 : count === 5 ? 500 : count === 6 ? 800 : 0;
-      total -= discount;
-      totalEl.textContent = `總金額：${total} 元`;
+      const d = discount[checkboxes.length] || 0;
+      totalDisplay.innerText = sum - d;
     }
 
-    function resetForm() {
-      document.querySelectorAll("input").forEach(input => {
-        if (input.type === "text" || input.type === "password") input.value = "";
-        if (input.type === "checkbox") input.checked = false;
-      });
-      totalEl.textContent = "總金額：0 元";
-      document.querySelectorAll(".error").forEach(e => e.style.display = "none");
+    function clearForm() {
+      document.getElementById("realName").value = "";
+      document.getElementById("fbName").value = "";
+      document.getElementById("bankLast5").value = "";
+      document.getElementById("username").value = "";
+      document.getElementById("password").value = "";
+      document.querySelectorAll("#schools input[type=checkbox]").forEach(cb => cb.checked = false);
+      updateTotal();
+      document.getElementById("result").innerText = "";
     }
 
-    function submitForm() {
-      const fields = ["realName", "fbName", "bankLast5", "username", "password"];
-      let valid = true;
-      fields.forEach(id => {
-        const el = document.getElementById(id);
-        const err = document.getElementById("error-" + id);
-        if (!el.value.trim()) {
-          err.style.display = "inline";
-          valid = false;
-        } else {
-          err.style.display = "none";
-        }
-      });
+    async function submitForm() {
+      const realName = document.getElementById("realName").value.trim();
+      const fbName = document.getElementById("fbName").value.trim();
+      const bankLast5 = document.getElementById("bankLast5").value.trim();
+      const username = document.getElementById("username").value.trim();
+      const password = document.getElementById("password").value.trim();
+      const selectedSchools = Array.from(document.querySelectorAll("#schools input[type=checkbox]:checked")).map(cb => cb.value);
+      const totalPrice = parseInt(document.getElementById("total").innerText);
 
-      const checkedSchools = Array.from(schools).filter(s => s.checked);
-      const schoolError = document.getElementById("error-school");
-      if (checkedSchools.length === 0) {
-        schoolError.style.display = "inline";
-        valid = false;
-      } else {
-        schoolError.style.display = "none";
+      if (!realName || !fbName || !bankLast5 || !username || !password || selectedSchools.length === 0) {
+        alert("❌ 請填寫所有欄位並至少勾選一所學校！");
+        return;
       }
 
-      if (!valid) return alert("❌ 請完整填寫所有欄位");
-
-      const formData = {
-        realName: document.getElementById("realName").value.trim(),
-        fbName: document.getElementById("fbName").value.trim(),
-        bankLast5: document.getElementById("bankLast5").value.trim(),
-        username: document.getElementById("username").value.trim(),
-        password: document.getElementById("password").value.trim(),
-        purchased: {}
+      const payload = {
+        realName,
+        fbName,
+        bankLast5,
+        username,
+        password,
+        selectedSchools,
+        totalPrice
       };
 
-      checkedSchools.forEach(s => {
-        formData.purchased[s.dataset.name] = true;
-      });
+      try {
+        const res = await fetch("https://submitSignupRequest-xxxxx-uc.a.run.app", { // TODO: 替換成實際部署 URL
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload)
+        });
 
-      console.log("✅ 將送出的資料：", formData);
-      alert("✅ 表單資料已準備好，可進行串接 Firebase（目前僅顯示於 console.log）");
+        const data = await res.json();
+        if (data.success) {
+          document.getElementById("result").innerText = "✅ 送出成功，請等待審核！";
+          clearForm();
+        } else {
+          document.getElementById("result").innerText = "❌ 發生錯誤：" + (data.error || "請稍後再試");
+        }
+      } catch (err) {
+        console.error(err);
+        document.getElementById("result").innerText = "🚨 無法連線，請稍後再試。";
+      }
     }
   </script>
 </body>
