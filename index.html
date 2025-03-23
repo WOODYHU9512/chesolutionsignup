@@ -2,23 +2,30 @@
 <html lang="zh-TW">
 <head>
   <meta charset="UTF-8">
-  <title>考古題申請表單</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>註冊填寫表單</title>
   <style>
     body {
       font-family: Arial, sans-serif;
-      margin: 30px;
+      max-width: 600px;
+      margin: 40px auto;
+      padding: 20px;
+      border: 1px solid #ccc;
+      border-radius: 10px;
     }
     label {
       display: block;
       margin-top: 15px;
+      font-weight: bold;
     }
-    .school-item {
-      display: flex;
-      align-items: center;
+    input[type="text"], input[type="password"] {
+      width: 100%;
+      padding: 8px;
       margin-top: 5px;
+      font-size: 16px;
     }
-    .school-item input {
-      margin-right: 8px;
+    .school-option {
+      margin-top: 5px;
     }
     #total {
       margin-top: 20px;
@@ -30,83 +37,115 @@
       margin-top: 20px;
       padding: 10px 20px;
       font-size: 16px;
+      cursor: pointer;
     }
   </style>
 </head>
 <body>
-  <h2>📄 請填寫申請資訊</h2>
+  <h2>帳號申請表單</h2>
 
-  <label>真實姓名：<input type="text" id="realName"></label>
-  <label>FB 姓名（聯絡用）：<input type="text" id="fbName"></label>
-  <label>銀行帳號後五碼：<input type="text" id="bankCode"></label>
-  <label>申請帳號：<input type="text" id="account"></label>
-  <label>申請密碼：<input type="password" id="password"></label>
+  <label>真實姓名：</label>
+  <input type="text" id="realName" required>
 
-  <h3>📚 勾選欲購買的學校：</h3>
-  <div class="school-item"><input type="checkbox" class="school" value="台大" data-price="600">台大（103~114單操輸送/化熱化反/工程數學）</div>
-  <div class="school-item"><input type="checkbox" class="school" value="清大" data-price="700">清大（103~114單操輸送/化熱化反）</div>
-  <div class="school-item"><input type="checkbox" class="school" value="成大" data-price="700">成大（103~114單操輸送/化熱/化反）</div>
-  <div class="school-item"><input type="checkbox" class="school" value="中央" data-price="550">中央（103~114單操輸送/化熱化反）</div>
-  <div class="school-item"><input type="checkbox" class="school" value="台科大" data-price="550">台科大（103~114單操輸送/化熱化反/工程數學）</div>
-  <div class="school-item"><input type="checkbox" class="school" value="中興" data-price="550">中興（104~114單操輸送/化熱化反/工程數學）</div>
+  <label>Facebook姓名與網址 (聯絡用，請會匯款完主動私訊粉專)：</label>
+  <input type="text" id="fbName" required>
 
-  <div id="total">💰 總金額：0 元</div>
+  <label>銀行帳號後五碼：</label>
+  <input type="text" id="bankCode" required>
 
-  <button onclick="submitForm()">送出申請</button>
+  <label>欲購買的間數：</label>
+  <div class="school-option">
+    <input type="checkbox" name="school" value="台大" data-price="600"> 台大（103~114 單操輸送/化熱化反/工程數學）
+  </div>
+  <div class="school-option">
+    <input type="checkbox" name="school" value="清大" data-price="700"> 清大（103~114 單操輸送/化熱化反）
+  </div>
+  <div class="school-option">
+    <input type="checkbox" name="school" value="成大" data-price="700"> 成大（含103~114 單操輸送/化熱/化反）
+  </div>
+  <div class="school-option">
+    <input type="checkbox" name="school" value="中央" data-price="550"> 中央（含103~114 單操輸送/化熱化反）
+  </div>
+  <div class="school-option">
+    <input type="checkbox" name="school" value="台科大" data-price="550"> 台科大（含103~114 單操輸送/化熱化反/工程數學）
+  </div>
+  <div class="school-option">
+    <input type="checkbox" name="school" value="中興" data-price="550"> 中興（含104~114 單操輸送/化熱化反/工程數學）
+  </div>
+
+  <div id="total">總金額：0 元</div>
+
+  <label>申請帳號：</label>
+  <input type="text" id="newUsername" required>
+
+  <label>申請密碼：</label>
+  <input type="password" id="newPassword" required>
+
+  <button onclick="handleSubmit()">送出申請</button>
 
   <script>
-    const schoolCheckboxes = document.querySelectorAll('.school');
-    const totalDisplay = document.getElementById('total');
+    const schoolCheckboxes = document.querySelectorAll('input[name="school"]');
+    const totalDisplay = document.getElementById("total");
 
-    schoolCheckboxes.forEach(box => {
-      box.addEventListener('change', calculateTotal);
+    schoolCheckboxes.forEach(cb => {
+      cb.addEventListener("change", updateTotal);
     });
 
-    function calculateTotal() {
+    function updateTotal() {
       let total = 0;
       let count = 0;
-      schoolCheckboxes.forEach(box => {
-        if (box.checked) {
-          total += parseInt(box.dataset.price);
+
+      schoolCheckboxes.forEach(cb => {
+        if (cb.checked) {
+          total += parseInt(cb.dataset.price);
           count++;
         }
       });
 
-      let discount = 0;
-      if (count === 2) discount = 100;
-      else if (count === 3) discount = 200;
-      else if (count === 4) discount = 350;
-      else if (count === 5) discount = 500;
-      else if (count === 6) discount = 800;
+      if (count === 2) total -= 100;
+      else if (count === 3) total -= 200;
+      else if (count === 4) total -= 350;
+      else if (count === 5) total -= 500;
+      else if (count === 6) total -= 800;
 
-      totalDisplay.innerText = `💰 總金額：${total - discount} 元`;
+      totalDisplay.textContent = `總金額：${total} 元`;
     }
 
-    function submitForm() {
-      const account = document.getElementById("account").value.trim();
-      const password = document.getElementById("password").value.trim();
-      if (!account || !password) {
-        alert("請輸入帳號與密碼！");
+    function handleSubmit() {
+      const name = document.getElementById("realName").value.trim();
+      const fb = document.getElementById("fbName").value.trim();
+      const bank = document.getElementById("bankCode").value.trim();
+      const username = document.getElementById("newUsername").value.trim();
+      const password = document.getElementById("newPassword").value.trim();
+
+      const selected = [];
+      schoolCheckboxes.forEach(cb => {
+        if (cb.checked) selected.push(cb.value);
+      });
+
+      if (!name || !fb || !bank || !username || !password) {
+        alert("❌ 請填寫所有欄位！");
+        return;
+      }
+
+      if (selected.length === 0) {
+        alert("❌ 請至少選擇一所學校！");
         return;
       }
 
       const purchased = {};
-      schoolCheckboxes.forEach(box => {
-        if (box.checked) {
-          purchased[box.value] = true;
-        }
+      selected.forEach(s => purchased[s] = true);
+
+      console.log({
+        username,
+        password,
+        realName: name,
+        fb,
+        bank,
+        purchased
       });
 
-      const data = {
-        username: account,
-        password,
-        purchased,
-        isLoggedIn: false,
-        sessionToken: ""
-      };
-
-      console.log("✅ 準備送出至 Firebase：", data);
-      alert("模擬送出成功（實際串接 Firebase 請自行加入 fetch 程式碼）");
+      alert("✅ 資料已準備好，準備串接 Firebase");
     }
   </script>
 </body>
