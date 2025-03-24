@@ -1,9 +1,10 @@
+<!-- 修改後 admin 註冊頁面 -->
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>化工製造所註冊、付款登記頁面</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>化工製造所註冊與付款登記系統</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -50,12 +51,6 @@
       font-size: 16px;
       cursor: pointer;
     }
-    #result {
-      margin-top: 20px;
-      font-weight: bold;
-      color: green;
-      text-align: center;
-    }
     footer {
       text-align: center;
       font-size: 12px;
@@ -71,7 +66,7 @@
 <body>
   <div class="header">
     <img src="https://raw.githubusercontent.com/WOODYHU9512/cheisgood/main/%E7%9C%9F%E6%AD%A3LOGO.jpeg" alt="logo">
-    <h2>化工製造所註冊與付費登記系統</h2>
+    <h2>化工製造所註冊與付款登記系統</h2>
   </div>
 
   <label>您的真實姓名：<input type="text" id="realName" required></label>
@@ -80,9 +75,9 @@
   <label>選擇付款方式：
     <select id="paymentMethod" onchange="showPaymentInput()">
       <option value="">請選擇</option>
-      <option value="jkopay">街口支付轉帳</option>
-      <option value="ipass">iPass money轉帳</option>
-      <option value="bank">銀行轉帳</option>
+      <option value="街口支付">街口支付轉帳</option>
+      <option value="iPass money">iPass money轉帳</option>
+      <option value="銀行轉帳">銀行轉帳</option>
     </select>
   </label>
   <div id="paymentInput"></div>
@@ -96,7 +91,6 @@
 
   <button onclick="submitForm()">送出申請</button>
   <button onclick="clearForm()">清空所有欄位</button>
-  <div id="result"></div>
 
   <footer>
     <p>若有操作相關疑問，請聯絡 <a href="https://www.facebook.com/CHEisverygood/" target="_blank">Facebook 粉專</a> 或來信 <a href="mailto:cheerfactorysolution@gmail.com">cheerfactorysolution@gmail.com</a></p>
@@ -105,12 +99,8 @@
 
   <script>
     const schoolPrices = {
-      "台大": 600,
-      "清大": 700,
-      "成大": 700,
-      "中央": 550,
-      "台科大": 550,
-      "中興": 550
+      "台大": 600, "清大": 700, "成大": 700,
+      "中央": 550, "台科大": 550, "中興": 550
     };
     const discount = [0, 0, 100, 200, 350, 500, 800];
     const schoolDiv = document.getElementById("schools");
@@ -139,28 +129,21 @@
       document.getElementById("paymentMethod").value = "";
       document.querySelectorAll("#schools input[type=checkbox]").forEach(cb => cb.checked = false);
       updateTotal();
-      document.getElementById("result").innerText = "";
     }
 
     function showPaymentInput() {
       const method = document.getElementById("paymentMethod").value;
       const container = document.getElementById("paymentInput");
       let html = "";
-      if (method === "jkopay") {
-        html = `
-          <label>您的街口帳戶：<input type="text" id="bankLast5"></label>
-          <p class="note"><a href="https://drive.google.com/file/d/1tXpoUGAFQYR0JkMHqPY1Wy7tqOBDUtzZ/view" target="_blank">街口帳戶轉帳教學</a></p>
-        `;
-      } else if (method === "ipass") {
-        html = `
-          <label>您的iPass money帳號：<input type="text" id="bankLast5"></label>
-          <p class="note"><a href="https://drive.google.com/file/d/1Xea7qybNVBZSaERUWQ5PpWmcyQzQ9p0T/view" target="_blank">iPass money轉帳教學</a></p>
-        `;
-      } else if (method === "bank") {
-        html = `
-          <label>您的銀行匯款帳號後五碼：<input type="text" id="bankLast5"></label>
-          <p class="note"><a href="https://drive.google.com/file/d/1yZT6J67mfJiE9nIQePPbE59oKcP3zv4g/view" target="_blank">銀行轉帳教學</a></p>
-        `;
+      if (method === "街口支付") {
+        html = `<label>您的街口帳戶：<input type="text" id="accountInput"></label>
+                <p class="note"><a href="https://drive.google.com/file/d/1tXpoUGAFQYR0JkMHqPY1Wy7tqOBDUtzZ/view" target="_blank">街口帳戶轉帳教學</a></p>`;
+      } else if (method === "iPass money") {
+        html = `<label>您的 iPass money 帳號：<input type="text" id="accountInput"></label>
+                <p class="note"><a href="https://drive.google.com/file/d/1Xea7qybNVBZSaERUWQ5PpWmcyQzQ9p0T/view" target="_blank">iPass money 轉帳教學</a></p>`;
+      } else if (method === "銀行轉帳") {
+        html = `<label>銀行帳號後五碼：<input type="text" id="accountInput"></label>
+                <p class="note"><a href="https://drive.google.com/file/d/1yZT6J67mfJiE9nIQePPbE59oKcP3zv4g/view" target="_blank">銀行轉帳教學</a></p>`;
       }
       container.innerHTML = html;
     }
@@ -168,52 +151,53 @@
     async function submitForm() {
       const realName = document.getElementById("realName").value.trim();
       const fbName = document.getElementById("fbName").value.trim();
-      const bankLast5 = document.getElementById("bankLast5")?.value.trim();
+      const paymentMethod = document.getElementById("paymentMethod").value;
+      const accountInput = document.getElementById("accountInput")?.value.trim();
       const username = document.getElementById("username").value.trim();
       const password = document.getElementById("password").value.trim();
       const selectedSchools = Array.from(document.querySelectorAll("#schools input[type=checkbox]:checked")).map(cb => cb.value);
       const totalPrice = parseInt(document.getElementById("total").innerText);
 
-      if (!realName || !fbName || !bankLast5 || !username || !password || selectedSchools.length === 0) {
+      if (!realName || !fbName || !paymentMethod || !accountInput || !username || !password || selectedSchools.length === 0) {
         alert("❌ 請填寫所有欄位並至少勾選一所學校！");
         return;
       }
 
       const fbUrlPattern = /^https?:\/\/(www\.)?facebook\.com\/[a-zA-Z0-9\.]+$/;
       if (!fbUrlPattern.test(fbName)) {
-        alert("❌ Facebook 個人網址格式不正確，請確認後再送出");
+        alert("❌ Facebook 個人網址格式不正確！");
         return;
       }
 
-      try {
-        const checkRes = await fetch("https://us-central1-chesolutionsignup.cloudfunctions.net/checkUsernameExists", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ username })
-        });
-        const checkData = await checkRes.json();
-        if (checkData.exists) {
-          alert(`⚠️ 帳號 ${username} 已被註冊，請改用其他帳號！`);
-          return;
-        }
+      const existsCheck = await fetch("https://us-central1-chesolutionsignup.cloudfunctions.net/checkUsernameExists", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username })
+      });
+      const existsData = await existsCheck.json();
+      if (existsData.exists) {
+        alert(`⚠️ 帳號 ${username} 已被註冊，請改用其他帳號！`);
+        return;
+      }
 
-        const payload = { realName, fbName, bankLast5, username, password, selectedSchools, totalPrice };
-        const res = await fetch("https://us-central1-chesolutionsignup.cloudfunctions.net/submitSignupRequest", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(payload)
-        });
+      const payload = {
+        realName, fbName, paymentMethod,
+        bankLast5: accountInput,
+        username, password, selectedSchools, totalPrice
+      };
 
-        const data = await res.json();
-        if (data.success) {
-          alert("✅ 送出成功，請耐心等待審核！\n若有問題請私訊我們的粉專。");
-          clearForm();
-        } else {
-          document.getElementById("result").innerText = "❌ 發生錯誤：" + (data.error || "請稍後再試");
-        }
-      } catch (err) {
-        console.error(err);
-        document.getElementById("result").innerText = "🚨 無法連線，請稍後再試。";
+      const res = await fetch("https://us-central1-chesolutionsignup.cloudfunctions.net/submitSignupRequest", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+      });
+
+      const data = await res.json();
+      if (data.success) {
+        alert("✅ 送出成功，請耐心等待審核！");
+        clearForm();
+      } else {
+        alert("❌ 發生錯誤：" + (data.error || "請稍後再試"));
       }
     }
   </script>
