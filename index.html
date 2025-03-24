@@ -13,8 +13,18 @@
       border: 1px solid #ccc;
       border-radius: 10px;
     }
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+    .header img {
+      height: 60px;
+      border-radius: 8px;
+    }
     h2 {
-      text-align: center;
+      margin: 0;
     }
     label {
       display: block;
@@ -46,25 +56,52 @@
       color: green;
       text-align: center;
     }
+    footer {
+      text-align: center;
+      font-size: 12px;
+      margin-top: 30px;
+      color: #555;
+    }
+    .note {
+      font-size: 14px;
+      margin-top: 10px;
+    }
   </style>
 </head>
 <body>
-  <h2>化工製造所註冊與付費登記系統</h2>
+  <div class="header">
+    <img src="https://raw.githubusercontent.com/WOODYHU9512/cheisgood/main/%E7%9C%9F%E6%AD%A3LOGO.jpeg" alt="logo">
+    <h2>化工製造所註冊與付費登記系統</h2>
+  </div>
+
   <label>真實姓名：<input type="text" id="realName" required></label>
-  <label>Facebook姓名與網址：<input type="text" id="fbName" required></label>
-  <label>銀行帳號後五碼：<input type="text" id="bankLast5" required></label>
+  <label>個人Facebook網址(聯絡用)：<input type="text" id="fbName" required></label>
 
-  <h3>欲購買的間數：</h3>
+  <label>選擇付款方式：
+    <select id="paymentMethod" onchange="showPaymentInput()">
+      <option value="">請選擇</option>
+      <option value="jkopay">街口支付轉帳</option>
+      <option value="ipass">iPass money轉帳</option>
+      <option value="bank">銀行轉帳</option>
+    </select>
+  </label>
+  <div id="paymentInput"></div>
+
+  <h3>要購買哪幾間考古題?(請勾選)</h3>
   <div id="schools"></div>
-
   <p><strong>總金額：<span id="total">0</span> 元</strong></p>
 
-  <label>申請帳號：<input type="text" id="username" required></label>
-  <label>申請密碼：<input type="password" id="password" required></label>
+  <label>設定觀看帳號：<input type="text" id="username" required></label>
+  <label>設定觀看密碼：<input type="password" id="password" required></label>
 
   <button onclick="submitForm()">送出申請</button>
   <button onclick="clearForm()">清空所有欄位</button>
   <div id="result"></div>
+
+  <footer>
+    <p>若有操作相關疑問，請聯絡 <a href="https://www.facebook.com/CHEisverygood/" target="_blank">Facebook 粉專</a> 或來信 <a href="mailto:cheerfactorysolution@gmail.com">cheerfactorysolution@gmail.com</a></p>
+    <p>著作權所有，侵害必究 © 化工製造所</p>
+  </footer>
 
   <script>
     const schoolPrices = {
@@ -75,26 +112,20 @@
       "台科大": 550,
       "中興": 550
     };
-
     const discount = [0, 0, 100, 200, 350, 500, 800];
     const schoolDiv = document.getElementById("schools");
     const totalDisplay = document.getElementById("total");
-
     for (const [school, price] of Object.entries(schoolPrices)) {
       const div = document.createElement("div");
       div.className = "school-option";
-      div.innerHTML = `
-        <label><input type="checkbox" value="${school}" onchange="updateTotal()"> ${school}（${price} 元）</label>
-      `;
+      div.innerHTML = `<label><input type="checkbox" value="${school}" onchange="updateTotal()"> ${school}（${price} 元）</label>`;
       schoolDiv.appendChild(div);
     }
 
     function updateTotal() {
       const checkboxes = document.querySelectorAll("#schools input[type=checkbox]:checked");
       let sum = 0;
-      checkboxes.forEach(cb => {
-        sum += schoolPrices[cb.value];
-      });
+      checkboxes.forEach(cb => sum += schoolPrices[cb.value]);
       const d = discount[checkboxes.length] || 0;
       totalDisplay.innerText = sum - d;
     }
@@ -102,18 +133,42 @@
     function clearForm() {
       document.getElementById("realName").value = "";
       document.getElementById("fbName").value = "";
-      document.getElementById("bankLast5").value = "";
       document.getElementById("username").value = "";
       document.getElementById("password").value = "";
+      document.getElementById("paymentInput").innerHTML = "";
+      document.getElementById("paymentMethod").value = "";
       document.querySelectorAll("#schools input[type=checkbox]").forEach(cb => cb.checked = false);
       updateTotal();
       document.getElementById("result").innerText = "";
     }
 
+    function showPaymentInput() {
+      const method = document.getElementById("paymentMethod").value;
+      const container = document.getElementById("paymentInput");
+      let html = "";
+      if (method === "jkopay") {
+        html = `
+          <label>您的街口帳戶：<input type="text" id="bankLast5"></label>
+          <p class="note"><a href="https://drive.google.com/file/d/1tXpoUGAFQYR0JkMHqPY1Wy7tqOBDUtzZ/view" target="_blank">街口帳戶轉帳教學</a></p>
+        `;
+      } else if (method === "ipass") {
+        html = `
+          <label>您的iPass money帳號：<input type="text" id="bankLast5"></label>
+          <p class="note"><a href="https://drive.google.com/file/d/1Xea7qybNVBZSaERUWQ5PpWmcyQzQ9p0T/view" target="_blank">iPass money轉帳教學</a></p>
+        `;
+      } else if (method === "bank") {
+        html = `
+          <label>您的銀行匯款帳號後五碼：<input type="text" id="bankLast5"></label>
+          <p class="note"><a href="https://drive.google.com/file/d/1yZT6J67mfJiE9nIQePPbE59oKcP3zv4g/view" target="_blank">銀行轉帳教學</a></p>
+        `;
+      }
+      container.innerHTML = html;
+    }
+
     async function submitForm() {
       const realName = document.getElementById("realName").value.trim();
       const fbName = document.getElementById("fbName").value.trim();
-      const bankLast5 = document.getElementById("bankLast5").value.trim();
+      const bankLast5 = document.getElementById("bankLast5")?.value.trim();
       const username = document.getElementById("username").value.trim();
       const password = document.getElementById("password").value.trim();
       const selectedSchools = Array.from(document.querySelectorAll("#schools input[type=checkbox]:checked")).map(cb => cb.value);
@@ -124,30 +179,25 @@
         return;
       }
 
+      const fbUrlPattern = /^https?:\/\/(www\.)?facebook\.com\/[a-zA-Z0-9\.]+$/;
+      if (!fbUrlPattern.test(fbName)) {
+        alert("❌ Facebook 個人網址格式不正確，請確認後再送出");
+        return;
+      }
+
       try {
-        // 檢查帳號是否重複
         const checkRes = await fetch("https://us-central1-chesolutionsignup.cloudfunctions.net/checkUsernameExists", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ username })
         });
-
         const checkData = await checkRes.json();
         if (checkData.exists) {
           alert(`⚠️ 帳號 ${username} 已被註冊，請改用其他帳號！`);
           return;
         }
 
-        const payload = {
-          realName,
-          fbName,
-          bankLast5,
-          username,
-          password,
-          selectedSchools,
-          totalPrice
-        };
-
+        const payload = { realName, fbName, bankLast5, username, password, selectedSchools, totalPrice };
         const res = await fetch("https://us-central1-chesolutionsignup.cloudfunctions.net/submitSignupRequest", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -156,16 +206,9 @@
 
         const data = await res.json();
         if (data.success) {
-  document.getElementById("result").innerHTML = `
-    ✅ 送出成功，請耐心等待審核！(稍後跳轉)<br>
-    若有問題請私訊 <a href="https://www.facebook.com/CHEisverygood" target="_blank">粉專</a>。
-  `;
-  // 加上延遲清空表單，2 秒後再清除欄位
-  setTimeout(() => {
-    clearForm();
-  }, 10000);
-}
- else {
+          alert("✅ 送出成功，請耐心等待審核！\n若有問題請私訊我們的粉專。");
+          clearForm();
+        } else {
           document.getElementById("result").innerText = "❌ 發生錯誤：" + (data.error || "請稍後再試");
         }
       } catch (err) {
