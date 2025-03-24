@@ -86,8 +86,8 @@
   <div id="schools"></div>
   <p><strong>總金額：<span id="total">0</span> 元</strong></p>
 
-  <label>設定觀看帳號：<input type="text" id="username" required></label>
-  <label>設定觀看密碼：<input type="password" id="password" required></label>
+  <label>設定觀看帳號(請自行記錄)：<input type="text" id="username" required></label>
+  <label>設定觀看密碼(請自行記錄)：<input type="password" id="password" required></label>
 
   <button onclick="submitForm()">送出申請</button>
   <button onclick="clearForm()">清空所有欄位</button>
@@ -194,7 +194,7 @@
 
       const data = await res.json();
       if (data.success) {
-        alert("✅ 送出成功，非常感謝您的支持！請主動私訊粉專告知並耐心等待審核！");
+        alert("✅ 送出成功，非常感謝您的支持！請主動私訊粉專告知姓名並耐心等待審核！");
         clearForm();
       } else {
         alert("❌ 發生錯誤：" + (data.error || "請稍後再試"));
