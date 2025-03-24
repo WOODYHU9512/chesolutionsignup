@@ -163,7 +163,7 @@
         return;
       }
 
-      const fbUrlPattern = /^https?:\/\/(www\.)?facebook\.com\/[a-zA-Z0-9\.]+$/;
+      const fbUrlPattern = /^https?:\/\/(www\.)?facebook\.com\/(profile\.php\?id=\d+|[a-zA-Z0-9.\-_]+)([/?].*)?$/;
       if (!fbUrlPattern.test(fbName)) {
         alert("❌ Facebook 個人網址格式不正確！");
         return;
