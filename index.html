@@ -13,9 +13,15 @@
       margin-top: 20px;
       text-align: center;
     }
+    .school-preview-grid .preview-box {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
     .school-preview-grid img {
       width: 180px;
-      height: auto;
+      height: 130px;
+      object-fit: cover;
       border-radius: 10px;
       cursor: pointer;
       transition: transform 0.3s;
@@ -24,8 +30,10 @@
       transform: scale(1.05);
     }
     .school-label {
-      margin-top: 10px;
+      margin-top: 8px;
       font-weight: bold;
+      height: 24px;
+      line-height: 24px;
     }
     .modal {
       display: none;
@@ -128,8 +136,12 @@
     <div class="school-preview-grid" id="previewGrid"></div>
 
     <div class="cta-buttons">
-      <a href="https://woodyhu9512.github.io/cheisgood/" target="_blank"><img src="https://i.imgur.com/6UcoGVf.png" alt="立即登入"></a>
-      <a href="https://woodyhu9512.github.io/chesolutionsignup/signup.html" target="_blank"><img src="https://i.imgur.com/1PeLfCg.png" alt="我要註冊與購買"></a>
+      <a href="https://woodyhu9512.github.io/cheisgood/" target="_blank">
+        <img src="https://i.imgur.com/wImLHZn.png" alt="立即登入">
+      </a>
+      <a href="https://woodyhu9512.github.io/chesolutionsignup/signup.html" target="_blank">
+        <img src="https://i.imgur.com/MsKDnQO.png" alt="我要註冊與購買">
+      </a>
     </div>
 
     <footer>
@@ -170,6 +182,7 @@
     const previewGrid = document.getElementById("previewGrid");
     Object.keys(galleries).forEach(school => {
       const wrapper = document.createElement("div");
+      wrapper.className = "preview-box";
       const thumb = document.createElement("img");
       thumb.src = `https://github.com/WOODYHU9512/chesolutionsignup/blob/main/${galleries[school][0]}?raw=true`;
       thumb.alt = school;
