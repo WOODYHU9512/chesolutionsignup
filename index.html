@@ -6,45 +6,62 @@
   <title>化工製造所｜研究所考古題平台</title>
   <link rel="stylesheet" href="style.css">
   <style>
-    .school-images {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    .school-gallery {
+      display: flex;
+      flex-wrap: wrap;
       gap: 15px;
+      justify-content: center;
       margin-top: 20px;
     }
-    .school-images a img {
+    .school-gallery button {
+      background-color: #eee;
+      border: 1px solid #ccc;
+      padding: 10px 16px;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    .school-gallery button:hover {
+      background-color: #ddd;
+    }
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 9999;
+      left: 0;
+      top: 0;
       width: 100%;
+      height: 100%;
+      background-color: rgba(0,0,0,0.7);
+      justify-content: center;
+      align-items: center;
+    }
+    .modal-content {
+      position: relative;
+      background-color: #fff;
+      padding: 20px;
       border-radius: 8px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-      transition: transform 0.3s;
-    }
-    .school-images a img:hover {
-      transform: scale(1.05);
-    }
-    .cta-buttons {
+      max-width: 90%;
+      max-height: 90%;
       text-align: center;
-      margin-top: 40px;
     }
-    .cta-buttons a {
-      display: inline-block;
-      background-color: #0077cc;
-      color: white;
-      padding: 14px 28px;
-      margin: 10px;
+    .modal-content img {
+      max-width: 100%;
+      max-height: 70vh;
       border-radius: 8px;
-      text-decoration: none;
-      font-size: 18px;
-      font-weight: bold;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
     }
-    .cta-buttons a:hover {
-      background-color: #005fa3;
+    .modal-close {
+      position: absolute;
+      top: 10px;
+      right: 15px;
+      font-size: 20px;
+      cursor: pointer;
     }
-    footer {
-      margin-top: 60px;
-      text-align: center;
-      font-size: 14px;
-      color: #777;
+    .modal-nav {
+      margin-top: 10px;
+    }
+    .modal-nav button {
+      margin: 0 10px;
+      padding: 6px 12px;
     }
   </style>
 </head>
@@ -84,21 +101,13 @@
     </p>
 
     <h2>🖼️ 考古題畫面預覽</h2>
-    <div class="school-images">
-      <a href="https://github.com/WOODYHU9512/chesolutionsignup/blob/main/%E5%8F%B0%E5%A4%A7-1.png" target="_blank"><img src="https://github.com/WOODYHU9512/chesolutionsignup/blob/main/%E5%8F%B0%E5%A4%A7-1.png?raw=true"></a>
-      <a href="https://github.com/WOODYHU9512/chesolutionsignup/blob/main/%E5%8F%B0%E5%A4%A7-2.png" target="_blank"><img src="https://github.com/WOODYHU9512/chesolutionsignup/blob/main/%E5%8F%B0%E5%A4%A7-2.png?raw=true"></a>
-      <a href="https://github.com/WOODYHU9512/chesolutionsignup/blob/main/%E5%8F%B0%E5%A4%A7-3.png" target="_blank"><img src="https://github.com/WOODYHU9512/chesolutionsignup/blob/main/%E5%8F%B0%E5%A4%A7-3.png?raw=true"></a>
-      <a href="https://github.com/WOODYHU9512/chesolutionsignup/blob/main/%E6%B8%85%E5%A4%A7-1.png" target="_blank"><img src="https://github.com/WOODYHU9512/chesolutionsignup/blob/main/%E6%B8%85%E5%A4%A7-1.png?raw=true"></a>
-      <a href="https://github.com/WOODYHU9512/chesolutionsignup/blob/main/%E6%B8%85%E5%A4%A7-2.png" target="_blank"><img src="https://github.com/WOODYHU9512/chesolutionsignup/blob/main/%E6%B8%85%E5%A4%A7-2.png?raw=true"></a>
-      <a href="https://github.com/WOODYHU9512/chesolutionsignup/blob/main/%E6%88%90%E5%A4%A7-1.png" target="_blank"><img src="https://github.com/WOODYHU9512/chesolutionsignup/blob/main/%E6%88%90%E5%A4%A7-1.png?raw=true"></a>
-      <a href="https://github.com/WOODYHU9512/chesolutionsignup/blob/main/%E6%88%90%E5%A4%A7-2.png" target="_blank"><img src="https://github.com/WOODYHU9512/chesolutionsignup/blob/main/%E6%88%90%E5%A4%A7-2.png?raw=true"></a>
-      <a href="https://github.com/WOODYHU9512/chesolutionsignup/blob/main/%E6%88%90%E5%A4%A7-3.png" target="_blank"><img src="https://github.com/WOODYHU9512/chesolutionsignup/blob/main/%E6%88%90%E5%A4%A7-3.png?raw=true"></a>
-      <a href="https://github.com/WOODYHU9512/chesolutionsignup/blob/main/%E5%8F%B0%E7%A7%91%E5%A4%A7-1.png" target="_blank"><img src="https://github.com/WOODYHU9512/chesolutionsignup/blob/main/%E5%8F%B0%E7%A7%91%E5%A4%A7-1.png?raw=true"></a>
-      <a href="https://github.com/WOODYHU9512/chesolutionsignup/blob/main/%E5%8F%B0%E7%A7%91%E5%A4%A7-2.png" target="_blank"><img src="https://github.com/WOODYHU9512/chesolutionsignup/blob/main/%E5%8F%B0%E7%A7%91%E5%A4%A7-2.png?raw=true"></a>
-      <a href="https://github.com/WOODYHU9512/chesolutionsignup/blob/main/%E4%B8%AD%E5%A4%AE-1.png" target="_blank"><img src="https://github.com/WOODYHU9512/chesolutionsignup/blob/main/%E4%B8%AD%E5%A4%AE-1.png?raw=true"></a>
-      <a href="https://github.com/WOODYHU9512/chesolutionsignup/blob/main/%E4%B8%AD%E5%A4%AE-2.png" target="_blank"><img src="https://github.com/WOODYHU9512/chesolutionsignup/blob/main/%E4%B8%AD%E5%A4%AE-2.png?raw=true"></a>
-      <a href="https://github.com/WOODYHU9512/chesolutionsignup/blob/main/%E4%B8%AD%E8%88%88-1.png" target="_blank"><img src="https://github.com/WOODYHU9512/chesolutionsignup/blob/main/%E4%B8%AD%E8%88%88-1.png?raw=true"></a>
-      <a href="https://github.com/WOODYHU9512/chesolutionsignup/blob/main/%E4%B8%AD%E8%88%88-2.png" target="_blank"><img src="https://github.com/WOODYHU9512/chesolutionsignup/blob/main/%E4%B8%AD%E8%88%88-2.png?raw=true"></a>
+    <div class="school-gallery">
+      <button onclick="openGallery('台大')">台大</button>
+      <button onclick="openGallery('清大')">清大</button>
+      <button onclick="openGallery('成大')">成大</button>
+      <button onclick="openGallery('台科大')">台科大</button>
+      <button onclick="openGallery('中央')">中央</button>
+      <button onclick="openGallery('中興')">中興</button>
     </div>
 
     <div class="cta-buttons">
@@ -115,5 +124,63 @@
       <p>© 2025 化工製造所</p>
     </footer>
   </div>
+
+  <div class="modal" id="imageModal">
+    <div class="modal-content">
+      <span class="modal-close" onclick="closeModal()">&times;</span>
+      <img id="modalImage" src="" alt="Preview">
+      <div class="modal-nav">
+        <button onclick="prevImage()">← 上一張</button>
+        <button onclick="nextImage()">下一張 →</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const galleries = {
+      "台大": [
+        "台大-1.png", "台大-2.png", "台大-3.png"
+      ],
+      "清大": ["清大-1.png", "清大-2.png"],
+      "成大": ["成大-1.png", "成大-2.png", "成大-3.png"],
+      "台科大": ["台科大-1.png", "台科大-2.png"],
+      "中央": ["中央-1.png", "中央-2.png"],
+      "中興": ["中興-1.png", "中興-2.png"]
+    };
+
+    let currentSchool = "";
+    let currentIndex = 0;
+
+    function openGallery(school) {
+      currentSchool = school;
+      currentIndex = 0;
+      updateModalImage();
+      document.getElementById("imageModal").style.display = "flex";
+    }
+
+    function closeModal() {
+      document.getElementById("imageModal").style.display = "none";
+    }
+
+    function updateModalImage() {
+      const filename = galleries[currentSchool][currentIndex];
+      const url = `https://github.com/WOODYHU9512/chesolutionsignup/blob/main/${filename}?raw=true`;
+      document.getElementById("modalImage").src = url;
+    }
+
+    function prevImage() {
+      if (currentIndex > 0) {
+        currentIndex--;
+        updateModalImage();
+      }
+    }
+
+    function nextImage() {
+      if (currentIndex < galleries[currentSchool].length - 1) {
+        currentIndex++;
+        updateModalImage();
+      }
+    }
+  </script>
 </body>
 </html>
