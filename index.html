@@ -90,8 +90,9 @@
     <select id="paymentMethod" onchange="showPaymentInput()">
       <option value="">請選擇</option>
       <option value="街口支付">街口支付轉帳</option>
-      <option value="iPass money">iPass money轉帳</option>
-      <option value="銀行轉帳">銀行轉帳</option>
+      <option value="銀行轉帳">藍新金流-銀行轉帳</option>
+      <option value="超商代碼">藍新金流-超商代碼繳款</option>
+      <option value="條碼繳費">藍新金流-超商條碼繳費</option>
     </select>
   </label>
   <div id="paymentInput"></div>
@@ -147,21 +148,31 @@
     }
 
     function showPaymentInput() {
-      const method = document.getElementById("paymentMethod").value;
-      const container = document.getElementById("paymentInput");
-      let html = "";
-      if (method === "街口支付") {
-        html = `<label>您的街口帳戶：<input type="text" id="accountInput"></label>
-                <p class="note"><a href="https://drive.google.com/file/d/1tXpoUGAFQYR0JkMHqPY1Wy7tqOBDUtzZ/view" target="_blank">街口帳戶轉帳教學</a></p>`;
-      } else if (method === "iPass money") {
-        html = `<label>您的 iPass money 帳號：<input type="text" id="accountInput"></label>
-                <p class="note"><a href="https://drive.google.com/file/d/1Xea7qybNVBZSaERUWQ5PpWmcyQzQ9p0T/view" target="_blank">iPass money 轉帳教學</a></p>`;
-      } else if (method === "銀行轉帳") {
-        html = `<label>銀行帳號後五碼：<input type="text" id="accountInput"></label>
-                <p class="note"><a href="https://drive.google.com/file/d/1yZT6J67mfJiE9nIQePPbE59oKcP3zv4g/view" target="_blank">銀行轉帳教學</a></p>`;
-      }
-      container.innerHTML = html;
-    }
+  const method = document.getElementById("paymentMethod").value;
+  const container = document.getElementById("paymentInput");
+  let html = "";
+  const newebpayLinkHTML = `<p class="note"><a href="https://core.newebpay.com/EPG/chesolution/5mDEMi" target="_blank">👉 點我前往藍新金流付款連結</a></p>`;
+
+  if (method === "街口支付") {
+    html = `<label>您的街口帳戶：<input type="text" id="accountInput"></label>
+            <p class="note"><a href="https://drive.google.com/file/d/1sxHPadHIaXVMH164NJkmRC2tu0WT3C0a/view?usp=drive_link" target="_blank">街口帳戶轉帳教學</a></p>`;
+  } else if (method === "超商代碼") {
+    html = `<label>您的藍新金流交易序號：<input type="text" id="accountInput"></label>
+            <p class="note"><a href="https://drive.google.com/file/d/1-DSfdOOf8_IbeNkdinuoiTZYvD0G83J4/view?usp=drive_link" target="_blank">超商代碼付款教學</a></p>
+            ${newebpayLinkHTML}`;
+  } else if (method === "銀行轉帳") {
+    html = `<label>您的藍新金流交易序號：<input type="text" id="accountInput"></label>
+            <p class="note"><a href="https://drive.google.com/file/d/1-ByDuzrx8kaq3QwI5KcCgckSBiCYa68J/view?usp=drive_link" target="_blank">銀行轉帳教學</a></p>
+            ${newebpayLinkHTML}`;
+  } else if (method === "條碼繳費") {
+    html = `<label>您的藍新金流交易序號：<input type="text" id="accountInput"></label>
+            <p class="note"><a href="https://drive.google.com/file/d/1-DdoFESkJLA3W2l9pVXqHfzFyOthtv55/view?usp=sharing" target="_blank">條碼繳費教學</a></p>
+            ${newebpayLinkHTML}`;
+  }
+
+  container.innerHTML = html;
+}
+
 
     async function submitForm() {
       const realName = document.getElementById("realName").value.trim();
