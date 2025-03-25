@@ -105,20 +105,29 @@
     .flow-section h2 {
       margin-bottom: 20px;
     }
-    .flow-icons {
+    .flow-buttons {
       display: flex;
-      flex-wrap: wrap;
       justify-content: center;
-      gap: 30px;
+      flex-wrap: wrap;
+      gap: 20px;
     }
-    .flow-icons img {
-      width: 200px;
-      height: auto;
+    .flow-button {
+      display: inline-block;
+      padding: 20px 30px;
+      background-color: #f3f3f3;
+      border: 2px solid #0077cc;
+      border-radius: 12px;
+      font-weight: bold;
+      font-size: 16px;
+      width: 220px;
+      text-align: center;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
     }
-    .flow-caption {
-      font-size: 14px;
-      color: #666;
-      margin-top: 8px;
+    .flow-button small {
+      display: block;
+      font-size: 12px;
+      color: #555;
+      margin-top: 6px;
     }
     footer {
       margin-top: 60px;
@@ -165,18 +174,18 @@
 
     <div class="flow-section">
       <h2>🛒 購買流程</h2>
-      <div class="flow-icons">
-        <div>
-          <img src="https://i.imgur.com/lAqDhJl.png" alt="註冊資料">
-          <div class="flow-caption">填寫註冊資料（包含帳號密碼）</div>
+      <div class="flow-buttons">
+        <div class="flow-button">
+          註冊帳號密碼<br>
+          <small>填寫基本資料送出</small>
         </div>
-        <div>
-          <img src="https://i.imgur.com/W51wOex.png" alt="付款">
-          <div class="flow-caption">確認付款<br><small>支援街口支付/銀行轉帳/超商代碼/超商條碼繳費</small></div>
+        <div class="flow-button">
+          確認付款<br>
+          <small>支援街口/銀行轉帳/超商代碼/條碼</small>
         </div>
-        <div>
-          <img src="https://i.imgur.com/JR1rCgJ.png" alt="開通">
-          <div class="flow-caption">人工開通後即可不限次數瀏覽</div>
+        <div class="flow-button">
+          等待人工開通<br>
+          <small>開通後可立即瀏覽考古題</small>
         </div>
       </div>
     </div>
@@ -190,11 +199,7 @@
     </div>
 
     <footer>
-      <p>
-        <a href="term.html">服務條款</a> |
-        <a href="term.html#privacy">隱私權政策</a> |
-        <a href="term.html#refund">退款政策</a>
-      </p>
+      <p><a href="term.html">查看完整服務條款與隱私權政策</a></p>
       <p>聯絡我們：<br>
         Facebook：<a href="https://www.facebook.com/CHEisverygood/" target="_blank">https://www.facebook.com/CHEisverygood/</a><br>
         Email：<a href="mailto:cheerfactorysolution@gmail.com">cheerfactorysolution@gmail.com</a>
