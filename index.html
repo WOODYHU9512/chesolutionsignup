@@ -1,73 +1,118 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>化工製造所 - 研究所考古題平台</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>化工製造所｜研究所考古題平台</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .school-images {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 15px;
+      margin-top: 20px;
+    }
+    .school-images a img {
+      width: 100%;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      transition: transform 0.3s;
+    }
+    .school-images a img:hover {
+      transform: scale(1.05);
+    }
+    .cta-buttons {
+      text-align: center;
+      margin-top: 40px;
+    }
+    .cta-buttons a {
+      display: inline-block;
+      background-color: #0077cc;
+      color: white;
+      padding: 14px 28px;
+      margin: 10px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-size: 18px;
+      font-weight: bold;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+    .cta-buttons a:hover {
+      background-color: #005fa3;
+    }
+    footer {
+      margin-top: 60px;
+      text-align: center;
+      font-size: 14px;
+      color: #777;
+    }
+  </style>
 </head>
 <body>
   <div class="container">
     <div style="text-align: center;">
-      <img src="https://raw.githubusercontent.com/WOODYHU9512/cheisgood/main/%E7%9C%9F%E6%AD%A3LOGO.jpeg" 
-           alt="化工製造所 LOGO" 
-           style="height: 80px; border-radius: 12px; margin-bottom: 10px;" />
+      <img src="https://raw.githubusercontent.com/WOODYHU9512/cheisgood/main/%E7%9C%9F%E6%AD%A3LOGO.jpeg" alt="logo" style="height: 80px; border-radius: 12px; margin-bottom: 10px;">
       <h1>化工製造所</h1>
-      <h3>研究所考古題線上觀看平台</h3>
+      <h3>研究所考古題線上瀏覽平台</h3>
     </div>
-
-    <p>我們提供歷屆研究所考古題的線上閱讀服務，資料完整、即時開通、支援手機與電腦操作，讓你讀書更有效率！</p>
 
     <h2>📦 服務內容</h2>
     <ul>
-      <li>研究所各校歷屆考古題線上瀏覽</li>
-      <li>不需下載、直接線上閱讀</li>
+      <li>103~114 年台大/清大/成大/中央/台科大/中興 各校化工/化材所歷屆考古題</li>
+      <li>不需下載、隨時直接線上閱讀</li>
       <li>手機/平板/電腦皆可操作</li>
-      <li>一次購買，永久觀看</li>
+      <li>一次購買，陪你到考完！</li>
     </ul>
 
     <h2>💰 方案價格</h2>
-    <table style="width: 100%; border-collapse: collapse; margin-top: 10px;">
-      <thead>
-        <tr style="background-color: #f0f8ff;">
-          <th style="padding: 10px; border: 1px solid #ccc;">方案</th>
-          <th style="padding: 10px; border: 1px solid #ccc;">價格</th>
-          <th style="padding: 10px; border: 1px solid #ccc;">內容</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td style="padding: 10px; border: 1px solid #ccc;">單校單科</td>
-          <td style="padding: 10px; border: 1px solid #ccc;">NT$199</td>
-          <td style="padding: 10px; border: 1px solid #ccc;">即時開通，永久使用</td>
-        </tr>
-        <tr>
-          <td style="padding: 10px; border: 1px solid #ccc;">多校多科</td>
-          <td style="padding: 10px; border: 1px solid #ccc;">依數量計算</td>
-          <td style="padding: 10px; border: 1px solid #ccc;">自動套用優惠折扣</td>
-        </tr>
-      </tbody>
-    </table>
+    <ul>
+      <li>台大全部：NT$700（含103~113單操輸送 化熱化反 工數）</li>
+      <li>清大全部：NT$800（含103~113單操輸送 化熱化反）</li>
+      <li>成大全部：NT$800（含103~113單操輸送 化熱 化反）</li>
+      <li>中央全部：NT$600（含103~113單操輸送 化熱化反）</li>
+      <li>台科大全部：NT$600（含104~113單操輸送 化熱化反 工數）</li>
+      <li>中興全部：NT$600（含104~112單操輸送 化熱化反 工數）</li>
+    </ul>
 
-    <div style="text-align: center; margin-top: 30px;">
-      <a href="login.html" class="btn">立即登入</a>
-      <a href="register.html" class="btn" style="margin-left: 10px;">註冊與付款</a>
-    </div>
-
-    <h2 style="margin-top: 40px;">📞 聯絡我們</h2>
-    <p>
-      Facebook 粉專：<a href="https://www.facebook.com/CHEisverygood/" target="_blank">點我前往</a><br>
-      Email：<a href="mailto:cheerfactorysolution@gmail.com">cheerfactorysolution@gmail.com</a>
+    <p><strong>※優惠：</strong><br>
+      ● 兩間學校：折150元<br>
+      ● 三間學校：折250元<br>
+      ● 四間學校：折400元<br>
+      ● 五間學校：折550元<br>
+      ● 六間學校：折900元<br>
+      <em>(需一次購買，不可累積折扣；若需購買六間請先私訊)</em>
     </p>
 
-    <footer style="margin-top: 40px; text-align: center;">
+    <h2>🖼️ 考古題畫面預覽</h2>
+    <div class="school-images">
+      <a href="https://github.com/WOODYHU9512/chesolutionsignup/blob/main/%E5%8F%B0%E5%A4%A7-1.png" target="_blank"><img src="https://github.com/WOODYHU9512/chesolutionsignup/blob/main/%E5%8F%B0%E5%A4%A7-1.png?raw=true"></a>
+      <a href="https://github.com/WOODYHU9512/chesolutionsignup/blob/main/%E5%8F%B0%E5%A4%A7-2.png" target="_blank"><img src="https://github.com/WOODYHU9512/chesolutionsignup/blob/main/%E5%8F%B0%E5%A4%A7-2.png?raw=true"></a>
+      <a href="https://github.com/WOODYHU9512/chesolutionsignup/blob/main/%E5%8F%B0%E5%A4%A7-3.png" target="_blank"><img src="https://github.com/WOODYHU9512/chesolutionsignup/blob/main/%E5%8F%B0%E5%A4%A7-3.png?raw=true"></a>
+      <a href="https://github.com/WOODYHU9512/chesolutionsignup/blob/main/%E6%B8%85%E5%A4%A7-1.png" target="_blank"><img src="https://github.com/WOODYHU9512/chesolutionsignup/blob/main/%E6%B8%85%E5%A4%A7-1.png?raw=true"></a>
+      <a href="https://github.com/WOODYHU9512/chesolutionsignup/blob/main/%E6%B8%85%E5%A4%A7-2.png" target="_blank"><img src="https://github.com/WOODYHU9512/chesolutionsignup/blob/main/%E6%B8%85%E5%A4%A7-2.png?raw=true"></a>
+      <a href="https://github.com/WOODYHU9512/chesolutionsignup/blob/main/%E6%88%90%E5%A4%A7-1.png" target="_blank"><img src="https://github.com/WOODYHU9512/chesolutionsignup/blob/main/%E6%88%90%E5%A4%A7-1.png?raw=true"></a>
+      <a href="https://github.com/WOODYHU9512/chesolutionsignup/blob/main/%E6%88%90%E5%A4%A7-2.png" target="_blank"><img src="https://github.com/WOODYHU9512/chesolutionsignup/blob/main/%E6%88%90%E5%A4%A7-2.png?raw=true"></a>
+      <a href="https://github.com/WOODYHU9512/chesolutionsignup/blob/main/%E6%88%90%E5%A4%A7-3.png" target="_blank"><img src="https://github.com/WOODYHU9512/chesolutionsignup/blob/main/%E6%88%90%E5%A4%A7-3.png?raw=true"></a>
+      <a href="https://github.com/WOODYHU9512/chesolutionsignup/blob/main/%E5%8F%B0%E7%A7%91%E5%A4%A7-1.png" target="_blank"><img src="https://github.com/WOODYHU9512/chesolutionsignup/blob/main/%E5%8F%B0%E7%A7%91%E5%A4%A7-1.png?raw=true"></a>
+      <a href="https://github.com/WOODYHU9512/chesolutionsignup/blob/main/%E5%8F%B0%E7%A7%91%E5%A4%A7-2.png" target="_blank"><img src="https://github.com/WOODYHU9512/chesolutionsignup/blob/main/%E5%8F%B0%E7%A7%91%E5%A4%A7-2.png?raw=true"></a>
+      <a href="https://github.com/WOODYHU9512/chesolutionsignup/blob/main/%E4%B8%AD%E5%A4%AE-1.png" target="_blank"><img src="https://github.com/WOODYHU9512/chesolutionsignup/blob/main/%E4%B8%AD%E5%A4%AE-1.png?raw=true"></a>
+      <a href="https://github.com/WOODYHU9512/chesolutionsignup/blob/main/%E4%B8%AD%E5%A4%AE-2.png" target="_blank"><img src="https://github.com/WOODYHU9512/chesolutionsignup/blob/main/%E4%B8%AD%E5%A4%AE-2.png?raw=true"></a>
+      <a href="https://github.com/WOODYHU9512/chesolutionsignup/blob/main/%E4%B8%AD%E8%88%88-1.png" target="_blank"><img src="https://github.com/WOODYHU9512/chesolutionsignup/blob/main/%E4%B8%AD%E8%88%88-1.png?raw=true"></a>
+      <a href="https://github.com/WOODYHU9512/chesolutionsignup/blob/main/%E4%B8%AD%E8%88%88-2.png" target="_blank"><img src="https://github.com/WOODYHU9512/chesolutionsignup/blob/main/%E4%B8%AD%E8%88%88-2.png?raw=true"></a>
+    </div>
+
+    <div class="cta-buttons">
+      <a href="https://woodyhu9512.github.io/cheisgood/">立即登入</a>
+      <a href="https://woodyhu9512.github.io/chesolutionsignup/signup.html">我要註冊與購買！</a>
+    </div>
+
+    <footer>
       <p>
-        <a href="terms.html" target="_blank">服務條款</a> |
-        <a href="privacy.html" target="_blank">隱私權政策</a> |
-        <a href="refund.html" target="_blank">退款政策</a> |
-        <a href="contact.html" target="_blank">聯絡方式</a>
+        <a href="terms.html">服務條款</a> |
+        <a href="privacy.html">隱私權政策</a> |
+        <a href="refund.html">退款政策</a>
       </p>
-      <p style="color: #777;">© 2025 化工製造所 | 侵害必究</p>
+      <p>© 2025 化工製造所</p>
     </footer>
   </div>
 </body>
