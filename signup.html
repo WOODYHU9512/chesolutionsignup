@@ -98,11 +98,11 @@
   <label>您的真實姓名：<input type="text" id="realName" required></label>
   <label>個人Facebook網址(聯絡用)：<input type="text" id="fbName" required></label>
 
-  <label>選擇付款方式：
+  <label>選擇付款方式：(請務必查看付款流程教學）
     <select id="paymentMethod" onchange="showPaymentInput()">
       <option value="">請選擇</option>
       <option value="街口支付">街口支付轉帳</option>
-      <option value="銀行轉帳">藍新金流-銀行轉帳</option>
+      <option value="銀行轉帳（含手機網銀）">藍新金流-銀行轉帳（含手機網銀）</option>
       <option value="超商代碼">藍新金流-超商代碼繳款</option>
       <option value="條碼繳費">藍新金流-超商條碼繳費</option>
     </select>
@@ -174,7 +174,7 @@
             ${newebpayLinkHTML}`;
   } else if (method === "銀行轉帳") {
     html = `<label>您的藍新金流交易序號：<input type="text" id="accountInput"></label>
-            <p class="note"><a href="https://drive.google.com/file/d/1-ByDuzrx8kaq3QwI5KcCgckSBiCYa68J/view?usp=drive_link" target="_blank">銀行轉帳教學</a></p>
+            <p class="note"><a href="https://drive.google.com/file/d/1-ByDuzrx8kaq3QwI5KcCgckSBiCYa68J/view?usp=drive_link" target="_blank">銀行轉帳（含手機網銀）教學</a></p>
             ${newebpayLinkHTML}`;
   } else if (method === "條碼繳費") {
     html = `<label>您的藍新金流交易序號：<input type="text" id="accountInput"></label>
