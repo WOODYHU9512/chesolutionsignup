@@ -126,40 +126,63 @@
 
 
   <script>
-    const schoolPrices = {
-      "台大": 600, "清大": 700, "成大": 700,
-      "中央": 550, "台科大": 550, "中興": 550
-    };
-    const discount = [0, 0, 100, 200, 350, 500, 800];
-    const schoolDiv = document.getElementById("schools");
-    const totalDisplay = document.getElementById("total");
-    for (const [school, price] of Object.entries(schoolPrices)) {
-      const div = document.createElement("div");
-      div.className = "school-option";
-      div.innerHTML = `<label><input type="checkbox" value="${school}" onchange="updateTotal()"> ${school}（${price} 元）</label>`;
-      schoolDiv.appendChild(div);
-    }
+  const schoolPrices = {
+    "台大": 600, "清大": 700, "成大": 700,
+    "中央": 550, "台科大": 550, "中興": 550
+  };
 
-    function updateTotal() {
-      const checkboxes = document.querySelectorAll("#schools input[type=checkbox]:checked");
-      let sum = 0;
-      checkboxes.forEach(cb => sum += schoolPrices[cb.value]);
-      const d = discount[checkboxes.length] || 0;
-      totalDisplay.innerText = sum - d;
-    }
+  const schoolDiv = document.getElementById("schools");
+  const totalDisplay = document.getElementById("total");
 
-    function clearForm() {
-      document.getElementById("realName").value = "";
-      document.getElementById("fbName").value = "";
-      document.getElementById("username").value = "";
-      document.getElementById("password").value = "";
-      document.getElementById("paymentInput").innerHTML = "";
-      document.getElementById("paymentMethod").value = "";
-      document.querySelectorAll("#schools input[type=checkbox]").forEach(cb => cb.checked = false);
-      updateTotal();
-    }
+  // 新增顯示折扣說明欄位
+  const discountLabel = document.createElement("p");
+  discountLabel.innerHTML = `<strong id="discountInfo">目前尚未選擇學校</strong>`;
+  schoolDiv.after(discountLabel);
 
-    function showPaymentInput() {
+  for (const [school, price] of Object.entries(schoolPrices)) {
+    const div = document.createElement("div");
+    div.className = "school-option";
+    div.innerHTML = `<label><input type="checkbox" value="${school}" onchange="updateTotal()"> ${school}（${price} 元）</label>`;
+    schoolDiv.appendChild(div);
+  }
+
+  function calculateDiscount(count) {
+    if (count === 2) return 200;
+    if (count === 3) return 300;
+    if (count === 4) return 500;
+    if (count === 5) return 700;
+    if (count === 6) return 900;
+    return 0;
+  }
+
+  function updateTotal() {
+    const checkboxes = document.querySelectorAll("#schools input[type=checkbox]:checked");
+    const selectedCount = checkboxes.length;
+    let sum = 0;
+    checkboxes.forEach(cb => sum += schoolPrices[cb.value]);
+    const discount = calculateDiscount(selectedCount);
+    totalDisplay.innerText = sum - discount;
+
+    // 顯示勾選與折扣情況
+    const info = document.getElementById("discountInfo");
+    if (selectedCount === 0) {
+      info.innerText = "目前尚未選擇學校";
+    } else {
+      info.innerText = `已選擇 ${selectedCount} 間，折扣 ${discount} 元`;
+    }
+  }
+
+  function clearForm() {
+    document.getElementById("realName").value = "";
+    document.getElementById("fbName").value = "";
+    document.getElementById("username").value = "";
+    document.getElementById("password").value = "";
+    document.getElementById("paymentInput").innerHTML = "";
+    document.getElementById("paymentMethod").value = "";
+    document.querySelectorAll("#schools input[type=checkbox]").forEach(cb => cb.checked = false);
+    updateTotal();
+  }
+ function showPaymentInput() {
   const method = document.getElementById("paymentMethod").value;
   const container = document.getElementById("paymentInput");
   let html = "";
