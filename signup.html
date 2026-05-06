@@ -124,11 +124,15 @@
     <p>著作權所有，侵害必究 © 化工製造所</p>
   </footer>
 
-
   <script>
+  // ✅ 這裡修改了年份與金額
   const schoolPrices = {
-    "台大": 600, "清大": 700, "成大": 700,
-    "中央": 550, "台科大": 550, "中興": 550
+    "台大(103-115年)": 650, 
+    "清大(103-115年)": 750, 
+    "成大(103-115年)": 750,
+    "中央(103-114年)": 550, 
+    "台科大(103-114年)": 550, 
+    "中興(104-114年)": 550
   };
 
   const schoolDiv = document.getElementById("schools");
@@ -182,6 +186,7 @@
     document.querySelectorAll("#schools input[type=checkbox]").forEach(cb => cb.checked = false);
     updateTotal();
   }
+
  function showPaymentInput() {
   const method = document.getElementById("paymentMethod").value;
   const container = document.getElementById("paymentInput");
@@ -207,7 +212,6 @@
 
   container.innerHTML = html;
 }
-
 
     async function submitForm() {
       const realName = document.getElementById("realName").value.trim();
